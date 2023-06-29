@@ -10,6 +10,11 @@ class LocationController extends Controller
 {
     public function receiveLocation(Request $request)
     {
+        // $validation = $request->validate([
+        //     'latitude' => 'required',
+        //     'longitude' => 'required'
+        // ]);
+
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
         

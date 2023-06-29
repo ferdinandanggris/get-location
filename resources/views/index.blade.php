@@ -17,11 +17,11 @@
         <li>Longitude : <span id="longitude_value"></span></li>
         <li>Data Location : <span id="location">{{ $address }}</span></li>
     </ul>
-    <form action="/send-location" method="post" onsubmit="return (cekPermission(event)== true ? true : false)">
+    <form action="/send-location" method="post" id="myForm">
         @csrf
-        <input type="hidden" name="latitude" id="latitude">
-        <input type="hidden" name="longitude" id="longitude">
-        <button type="submit">Submit</button>
+        <input type="hidden" name="latitude" id="latitude" required>
+        <input type="hidden" name="longitude" id="longitude" required>
+        <button type="submit" id="submit">Submit</button>
     </form>
 </body>
 
@@ -30,6 +30,19 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
+
+$('#myForm').submit(function(event) {
+  
+  let state = (async () => {return await cekPermission(event);})();
+  console.log(document.getElementById('latitude').value);
+  if (document.getElementById('latitude').value != '' && document.getElementById('longitude').value != '' && state == true) {
+    return true;
+  }else{
+    return false;
+  }
+//   return false;
+});
+    
     // Cek apakah browser mendukung geolocation
     $(document).ready(function() {
         if (navigator.geolocation) {
@@ -102,7 +115,7 @@
         }
     })
 
-    async function cekPermission(event){
+    async function cekPermission(){
       const permissionStatus = await navigator?.permissions?.query({name: 'geolocation'})
       const hasPermission = permissionStatus?.state // Dynamic value
       console.log(hasPermission);
