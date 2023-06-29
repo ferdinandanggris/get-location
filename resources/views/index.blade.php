@@ -35,7 +35,7 @@ $('#myForm').submit(function(event) {
   
   let state = (async () => {return await cekPermission(event);})();
   console.log(document.getElementById('latitude').value);
-  if (document.getElementById('latitude').value != '' && document.getElementById('longitude').value != '' && state == true) {
+  if (document.getElementById('latitude').value != '' && document.getElementById('longitude').value != '') {
     return true;
   }else{
     return false;
